@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <h1> 가위바위보 게임 </h1>
+    <h2> 무엇을 내시겠습니까? </h2>
+    <div class="attack">
+    <input type="button" value="주먹" id="rock" onclick="game.player1('rock')">
+    <input type="button" value="가위" id="scissors" onclick="game.player1('scissors')">
+    <input type="button" value="보" id="paper" onclick="game.player1('paper')">
+    </div>
+    <script>
+
+      function randomPick(array){
+        var index = Math.floor(Math.random()*array.length);
+        return array[index];
+      }
+
+      var player1result = ''
+      var player2result = ''
+      var a=''
+      var choices = ['rock', 'scissors', 'paper'] //여기에 배열이 이미 존재하는데 밑에
+      //rock scissors paper를 써야한다는게 수상하다.... 더 발전시킬 방법이 없을까?
+      var game = {
+        player1 : function(a){
+          if(a === 'rock'){
+            //주먹 사진 띄우기
+            player1result = 'rock'
+            }
+          else if (a === 'scissors'){
+            //가위 사진 띄우기
+            player1result = 'scissors'
+            }
+          else if (a === 'paper'){
+            //보 사진 띄우기
+            player1result = 'paper'
+            }
+            document.querySelector('.myresult').innerHTML = player1result ;
+            game.player2()
+          },
+
+          player2 : function(picked){
+            var picked = randomPick(choices);
+            if (picked === 'rock'){
+              //주먹 사진 띄우기
+              player2result = 'rock'
+              }
+            else if (picked === 'scissors'){
+              //가위 사진 띄우기
+              player2result = 'scissors'
+              }
+            else{
+              //보 사진 띄우기
+              player2result = 'paper'
+              }
+              document.querySelector('.yourresult').innerHTML = player2result ;
+              game.result()
+          },
+
+          result : function(){
+            if(player1result === player2result){
+              document.querySelector('.gameresult').innerHTML = '무승부입니다'
+              colorChanger('green')
+            }
+            else if(
+              (player1result === 'rock' && player2result ==='scissors') ||
+                    (player1result === 'scissors' && player2result === 'paper') ||
+                    (player1result === 'paper' && player2result === 'rock')
+                    ){
+                      document.querySelector('.gameresult').innerHTML = '승리!'
+                      colorChanger('blue')
+                    }
+            else {
+            document.querySelector('.gameresult').innerHTML = '패배!'
+            colorChanger('red')
+            }
+          }
+        }
+      function colorChanger(color){
+        var tags = document.querySelectorAll('div')
+        var i=0
+        while(i<tags.length){
+          tags[i].style.color = color;
+          i=i+1
+        }
+      }
+    </script>
+    <div class='myresult'></div>
+    <div class='yourresult'></div>
+    <div class='gameresult'></div>
+  </body>
+
+</html>
